@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "stm32f446xx.h"
+#include "gpio.h"
 
 void main(void) {
     RCC->AHB1ENR |= (1 << 0);
@@ -8,10 +9,10 @@ void main(void) {
     dummy = RCC->AHB1ENR;
     dummy = RCC->AHB1ENR;
 
-    GPIOA->MODER |= (1 << 10);
+    gpio_set_pin_dir(gpioA, 5, gpioOutput);
 
     while(1) {
-        GPIOA->ODR ^= (1 << 5);
+        gpio_pin_toggle(gpioA, 5);
         for (uint32_t i = 0; i < 500000; i++);
     }
 }

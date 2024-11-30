@@ -1,44 +1,39 @@
-# Toolchain
+# Compiler and Tools
 CC = arm-none-eabi-gcc
-OBJCOPY = arm-none-eabi-objcopy
-SIZE = arm-none-eabi-size
-
-# Flags
-CFLAGS = -mcpu=cortex-m4 -mthumb -nostdlib
+CFLAGS = -mcpu=cortex-m4 -mthumb -nostdlib -g
 LDFLAGS = -T src/linker.ld
+
+# Include Paths
+CFLAGS += -I"src/device files" -I"src/hal" -I"src/hal/gpio"
 
 # Directories
 SRCDIR = src
-INCDIR = $(SRCDIR)/device files
 BUILDDIR = build
 
-# Files
-SRCS = $(wildcard $(SRCDIR)/*.c)
-OBJS = $(SRCS:$(SRCDIR)/%.c=$(BUILDDIR)/%.o)
+# Source and Object Files
+SRCS = $(wildcard $(SRCDIR)/*.c) \
+       $(wildcard $(SRCDIR)/device\ files/*.c) \
+       $(wildcard $(SRCDIR)/hal/**/*.c)
+OBJS = $(patsubst $(SRCDIR)/%.c, $(BUILDDIR)/%.o, $(SRCS))
+
+# Target Output
 TARGET = $(BUILDDIR)/main.elf
 
 # Rules
-.PHONY: all clean flash
-
 all: $(TARGET)
 
-# Build the ELF file
+# Link all object files into the final executable
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-	$(SIZE) $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
-# Compile C source files to object files
-$(BUILDDIR)/%.o: $(SRCDIR)/%.c | $(BUILDDIR)
-	$(CC) $(CFLAGS) -I"$(INCDIR)" -c $< -o $@
+# Compile .c files into .o files
+$(BUILDDIR)/%.o: $(SRCDIR)/%.c
+	@if not exist "$(dir $@)" mkdir "$(dir $@)"
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Create the build directory if it doesn't exist
-$(BUILDDIR):
-	mkdir -p $@
-
-# Clean the build directory
 clean:
 	rm -rf $(BUILDDIR)
 
-# Flash the firmware (optional, using OpenOCD as an example)
-flash: $(TARGET)
-	openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c "program $(TARGET) verify reset exit"
+print:
+	@echo "SRCS: $(SRCS)"
+	@echo "OBJS: $(OBJS)"

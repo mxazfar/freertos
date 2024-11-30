@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "stdint.h": "c",
-        "stm32f446xx.h": "c"
+        "stm32f446xx.h": "c",
+        "gpio.h": "c",
+        "common.h": "c"
     }
 }
