@@ -25,8 +25,8 @@ typedef enum {
 } gpio_port_t;
 
 typedef enum {
-    gpioSuccess,
-    gpioFail
+    gpioFail,
+    gpioSuccess
 } gpio_ret_t;
 
 typedef enum {
