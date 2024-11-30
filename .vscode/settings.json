@@ -3,6 +3,7 @@
         "stdint.h": "c",
         "stm32f446xx.h": "c",
         "gpio.h": "c",
-        "common.h": "c"
+        "common.h": "c",
+        "rcc.h": "c"
     }
 }

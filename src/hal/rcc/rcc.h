@@ -73,4 +73,6 @@ typedef enum {
     rccSuccess
 } rcc_ret_t;
 
+rcc_ret_t rcc_enable_peripheral_clk(rcc_peripheral_clk_t peripheral);
+
 #endif /* RCC_H */

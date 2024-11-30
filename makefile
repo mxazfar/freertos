@@ -4,7 +4,7 @@ CFLAGS = -mcpu=cortex-m4 -mthumb -nostdlib -g
 LDFLAGS = -T src/linker.ld
 
 # Include Paths
-CFLAGS += -I"src/device files" -I"src/hal" -I"src/hal/gpio"
+CFLAGS += -I"src/device files" -I"src/hal" -I"src/hal/gpio" -I"src/hal/rcc"
 
 # Directories
 SRCDIR = src
