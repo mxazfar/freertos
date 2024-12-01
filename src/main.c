@@ -5,6 +5,7 @@
 
 void main(void) {
     rcc_enable_peripheral_clk(rccClkGpioA);
+    rcc_enable_peripheral_clk(rccClkGpioC);
 
     gpio_pin_set_dir(gpioA, 5, gpioOutput);
     gpio_pin_set_dir(gpioC, 13, gpioInput);
