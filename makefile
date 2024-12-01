@@ -1,10 +1,10 @@
 # Compiler and Tools
 CC = arm-none-eabi-gcc
-CFLAGS = -mcpu=cortex-m4 -mthumb -nostdlib -g
+CFLAGS = -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -g -nostartfiles
 LDFLAGS = -T src/linker.ld
 
 # Include Paths
-CFLAGS += -I"src/device files" -I"src/hal" -I"src/hal/gpio" -I"src/hal/rcc" -I"src/q7seg"
+CFLAGS +=  -I"src" -I"src/device files" -I"src/hal" -I"src/hal/gpio" -I"src/hal/rcc" -I"src/q7seg" -I"src/FreeRTOS/include"
 
 # Directories
 SRCDIR = src
@@ -14,7 +14,8 @@ BUILDDIR = build
 SRCS = $(wildcard $(SRCDIR)/*.c) \
        $(wildcard $(SRCDIR)/device\ files/*.c) \
        $(wildcard $(SRCDIR)/hal/**/*.c) \
-	   $(wildcard $(SRCDIR)/q7seg/*.c)
+	   $(wildcard $(SRCDIR)/q7seg/*.c) \
+	   $(wildcard $(SRCDIR)/FreeRTOS/**/*.c)
 OBJS = $(patsubst $(SRCDIR)/%.c, $(BUILDDIR)/%.o, $(SRCS))
 
 # Target Output
@@ -33,7 +34,7 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(BUILDDIR)
+	if exist $(BUILDDIR) rmdir /s /q $(BUILDDIR)
 
 print:
 	@echo "SRCS: $(SRCS)"
