@@ -4,6 +4,8 @@
         "stm32f446xx.h": "c",
         "gpio.h": "c",
         "common.h": "c",
-        "rcc.h": "c"
+        "rcc.h": "c",
+        "3461bs.h": "c",
+        "q7seg.h": "c"
     }
 }

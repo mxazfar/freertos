@@ -73,3 +73,15 @@ gpio_ret_t gpio_pin_configure_alt_func(gpio_port_t port, gpio_pin_t pin, gpio_al
 
     return gpioSuccess;
 }
+
+gpio_ret_t gpio_port_set_dir(gpio_port_t port, gpio_dir_t direction) {
+    GPIO_TypeDef *portAddr = (GPIO_TypeDef*)GPIO_GET_PORT_ADDR(port);
+
+    portAddr->MODER &= ~0xFFFFFFFF;
+
+    for(uint8_t pin = 0; pin < 16; pin++) {
+        portAddr->MODER |= (direction << pin * 2);
+    }
+
+    return gpioSuccess;
+}

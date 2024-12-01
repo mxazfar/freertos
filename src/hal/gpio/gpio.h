@@ -70,4 +70,6 @@ gpio_ret_t gpio_pin_toggle(gpio_port_t port, gpio_pin_t pin);
 gpio_ret_t gpio_pin_configure_pupd(gpio_port_t port, gpio_pin_t pin, gpio_pupd_t pupd);
 gpio_ret_t gpio_pin_configure_alt_func(gpio_port_t port, gpio_pin_t pin, gpio_alt_func_t func);
 
+gpio_ret_t gpio_port_set_dir(gpio_port_t port, gpio_dir_t direction);
+
 #endif /* GPIO_H */

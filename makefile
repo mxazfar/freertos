@@ -4,7 +4,7 @@ CFLAGS = -mcpu=cortex-m4 -mthumb -nostdlib -g
 LDFLAGS = -T src/linker.ld
 
 # Include Paths
-CFLAGS += -I"src/device files" -I"src/hal" -I"src/hal/gpio" -I"src/hal/rcc"
+CFLAGS += -I"src/device files" -I"src/hal" -I"src/hal/gpio" -I"src/hal/rcc" -I"src/q7seg"
 
 # Directories
 SRCDIR = src
@@ -13,7 +13,8 @@ BUILDDIR = build
 # Source and Object Files
 SRCS = $(wildcard $(SRCDIR)/*.c) \
        $(wildcard $(SRCDIR)/device\ files/*.c) \
-       $(wildcard $(SRCDIR)/hal/**/*.c)
+       $(wildcard $(SRCDIR)/hal/**/*.c) \
+	   $(wildcard $(SRCDIR)/q7seg/*.c)
 OBJS = $(patsubst $(SRCDIR)/%.c, $(BUILDDIR)/%.o, $(SRCS))
 
 # Target Output

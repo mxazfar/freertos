@@ -2,6 +2,7 @@
 #include "stm32f446xx.h"
 #include "gpio.h"
 #include "rcc.h"
+#include "q7seg.h"
 
 void main(void) {
     rcc_enable_peripheral_clk(rccClkGpioA);
@@ -12,11 +13,12 @@ void main(void) {
 
     gpio_level_t buttonPressed = gpioPinLow;
 
-    while(1) {
-        gpio_pin_read(gpioC, 13, &buttonPressed);
+    initDisplay();
 
-        if(buttonPressed) {
-            gpio_pin_toggle(gpioA, 5);
+    while(1) {
+        for(uint8_t i = 0; i < 10; i++) {
+            writeDisplaySingle(q7seg4, i, 1);
+            for(volatile uint32_t i = 0; i < 250000; i++) {}
         }
     }
 }
