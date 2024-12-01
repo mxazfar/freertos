@@ -1,5 +1,5 @@
 #ifndef RCC_H
-#define RCC
+#define RCC_H
 
 typedef enum {
     rccClkGpioA,
