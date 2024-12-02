@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "stm32f446xx.h"
 
-TIM_TypeDef* timGeneral2to5PtrArray[4] = {TIM2, TIM3, TIM4, TIM5};
+extern TIM_TypeDef* timGeneral2to5PtrArray[4];
 
 typedef uint16_t tim_general_prescaler_t;
 typedef uint32_t tim_general_load_t;
@@ -21,6 +21,7 @@ typedef enum {
     timGeneralCountDown
 } tim_general_count_paradigm_t;
 
+// CK_INT clock runs at ?
 typedef enum {
     timGenCkInt,
     timGenCkIntTimes2,

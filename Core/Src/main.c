@@ -6,10 +6,17 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "tim_general.h"
 
-uint16_t displayNum = 5943;
-
+uint16_t displayNum = 0;
 uint16_t displayPow10[5] = {1, 10, 100, 1000, 10000};
+
+tim_general_config_t timer2Config = {
+    .countStyle = timGeneralCountUp,
+    .prescaleAmount = 1,
+    .clockDivision = timGenCkInt,
+    .preloadValue = 0xFFFF
+};
 
 void displaySegmentTask(void *params) {
     while(1) {
@@ -21,16 +28,23 @@ void displaySegmentTask(void *params) {
     }
 }
 
-void main(void) {
-    rcc_enable_peripheral_clk(rccClkGpioA);
-    rcc_enable_peripheral_clk(rccClkGpioC);
+void TIM2_IRQHandler(void) {
+    TIM2->SR &= ~TIM_SR_UIF;
+    displayNum++;
+}
 
-    gpio_pin_set_dir(gpioA, 5, gpioOutput);
-    gpio_pin_set_dir(gpioC, 13, gpioInput);
-
-    gpio_level_t buttonPressed = gpioPinLow;
-
+void init() {
     initDisplay();
+
+    NVIC_SetPriority(TIM2_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY);
+    rcc_enable_peripheral_clk(rccClkTim2);
+
+    configureTimer(timGeneralTimer2, &timer2Config);
+    startTimer(timGeneralTimer2);
+}
+
+void main(void) {
+    init();
 
     xTaskCreate(displaySegmentTask, "Display", 500, NULL, 1, NULL);
 

@@ -9,6 +9,7 @@
         "q7seg.h": "c",
         "startup.h": "c",
         "portmacro.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "tim_general.h": "c"
     }
 }

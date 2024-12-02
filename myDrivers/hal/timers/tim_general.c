@@ -1,6 +1,8 @@
 #include "tim_general.h"
 #include "stm32f446xx.h"
 
+TIM_TypeDef* timGeneral2to5PtrArray[4] = {TIM2, TIM3, TIM4, TIM5};
+
 tim_ret_t configureTimer(tim_general_timer_t timer, tim_general_config_t *timerConfiguration) {
     TIM_TypeDef* timerBase = timGeneral2to5PtrArray[timer];
 
@@ -10,6 +12,7 @@ tim_ret_t configureTimer(tim_general_timer_t timer, tim_general_config_t *timerC
 
     timerBase->PSC = timerConfiguration->prescaleAmount;
     timerBase->ARR = timerConfiguration->preloadValue;
+    timerBase->DIER |= (1 << TIM_DIER_TIE_Pos);
 
     return timSuccess;
 }

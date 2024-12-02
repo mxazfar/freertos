@@ -5,7 +5,7 @@ rcc_ret_t rcc_enable_peripheral_clk(rcc_peripheral_clk_t peripheral) {
     uint32_t peripheralBitmask = (1 << peripheral % 32);
     volatile uint32_t dummy;
 
-    switch(peripheral / 4) {
+    switch(peripheral / 32) {
         case 0:
             RCC->AHB1ENR |= peripheralBitmask;
             dummy = RCC->AHB1ENR;
