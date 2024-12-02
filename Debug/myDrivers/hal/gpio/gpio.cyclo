@@ -1,0 +1,7 @@
+../myDrivers/hal/gpio/gpio.c:6:12:gpio_pin_set_dir	1
+../myDrivers/hal/gpio/gpio.c:15:12:gpio_pin_write	2
+../myDrivers/hal/gpio/gpio.c:28:12:gpio_pin_read	1
+../myDrivers/hal/gpio/gpio.c:37:12:gpio_pin_toggle	2
+../myDrivers/hal/gpio/gpio.c:52:12:gpio_pin_configure_pupd	1
+../myDrivers/hal/gpio/gpio.c:62:12:gpio_pin_configure_alt_func	2
+../myDrivers/hal/gpio/gpio.c:77:12:gpio_port_set_dir	2

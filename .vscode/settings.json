@@ -6,6 +6,9 @@
         "common.h": "c",
         "rcc.h": "c",
         "3461bs.h": "c",
-        "q7seg.h": "c"
+        "q7seg.h": "c",
+        "startup.h": "c",
+        "portmacro.h": "c",
+        "freertos.h": "c"
     }
 }
