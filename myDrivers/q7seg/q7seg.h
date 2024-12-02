@@ -9,11 +9,15 @@
 #define Q7SEG_PIN_NUM 8
 #define Q7SEG_SEG_NUM 4
 
+#define Q7SEG_NO_DP 1
+#define Q7SEG_DP    0
+
 typedef enum {
     q7segFail,
     q7segSuccess
 } q7seg_ret_t;
 
+// add one to each pin and seg val to find pin on 3461 (eg q7segPinA is pin 11 on the device)
 typedef enum {
     q7segPinA = 10,
     q7segPinB = 6,
@@ -26,7 +30,7 @@ typedef enum {
 } q7seg_pin_t;
 
 typedef enum {
-    q7seg1 = 11,
+    q7seg1 = 12,
     q7seg2 = 8,
     q7seg3 = 7,
     q7seg4 = 5,

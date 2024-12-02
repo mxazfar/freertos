@@ -7,14 +7,17 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+uint16_t displayNum = 5943;
+
+uint16_t displayPow10[5] = {1, 10, 100, 1000, 10000};
+
 void displaySegmentTask(void *params) {
-    static int calls = 0;
-
     while(1) {
-        writeDisplaySingle(q7seg4, calls % 10, 1);
-        calls++;
-
-        vTaskDelay(pdMS_TO_TICKS(500));
+        for(uint8_t i = 0; i < 4; i++) {
+            uint8_t numToDisplay = (displayNum % displayPow10[i + 1]) / displayPow10[i];
+            writeDisplaySingle(q7segSegs[3-i], numToDisplay, 1);
+            vTaskDelay(pdMS_TO_TICKS(5));
+        }
     }
 }
 

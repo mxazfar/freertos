@@ -74,8 +74,14 @@ q7seg_ret_t writeNum(uint8_t num) {
 /// @param dp Whether or not we want the DP active 
 /// @return Status of operation
 q7seg_ret_t writeDisplaySingle(q7seg_seg_t segment, uint8_t num, uint8_t dp) {
-    // Enable segment
-    gpio_pin_write(Q7SEG_GPIO_PORT, segment, gpioPinHigh);
+    // Enable segment, clear others
+    for(uint8_t i = 0; i < 4; i++) {
+        if(segment == q7segSegs[i]) {
+            gpio_pin_write(Q7SEG_GPIO_PORT, q7segSegs[i], gpioPinHigh);
+        } else {
+            gpio_pin_write(Q7SEG_GPIO_PORT, q7segSegs[i], gpioPinLow);
+        }
+    }
 
     // Set display point
     gpio_pin_write(Q7SEG_GPIO_PORT, q7segPinDp, dp);
