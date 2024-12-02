@@ -1,7 +1,0 @@
-../myDrivers/hal/gpio/gpio.c:6:12:gpio_pin_set_dir	24	static
-../myDrivers/hal/gpio/gpio.c:15:12:gpio_pin_write	24	static
-../myDrivers/hal/gpio/gpio.c:28:12:gpio_pin_read	24	static
-../myDrivers/hal/gpio/gpio.c:37:12:gpio_pin_toggle	24	static
-../myDrivers/hal/gpio/gpio.c:52:12:gpio_pin_configure_pupd	24	static
-../myDrivers/hal/gpio/gpio.c:62:12:gpio_pin_configure_alt_func	24	static
-../myDrivers/hal/gpio/gpio.c:77:12:gpio_port_set_dir	24	static

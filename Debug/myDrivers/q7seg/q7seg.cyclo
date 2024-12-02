@@ -1,3 +1,0 @@
-../myDrivers/q7seg/q7seg.c:10:13:initDisplay	1
-../myDrivers/q7seg/q7seg.c:20:13:writeNum	13
-../myDrivers/q7seg/q7seg.c:76:13:writeDisplaySingle	1
