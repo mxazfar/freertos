@@ -8,11 +8,11 @@ tim_ret_t configureTimer(tim_general_timer_t timer, tim_general_config_t *timerC
 
     timerBase->CR1 |= (timerConfiguration->clockDivision << TIM_CR1_CKD_Pos) | 
                       (timerConfiguration->countStyle << TIM_CR1_DIR_Pos) |
-                      (1 << TIM_CR1_URS_Pos); // hardcoding this for now, only under/overflow generate interrupt
+                      (1 << TIM_CR1_URS_Pos); // hardcoding this for now, only under/overflow generate UEV
 
     timerBase->PSC = timerConfiguration->prescaleAmount;
     timerBase->ARR = timerConfiguration->preloadValue;
-    timerBase->DIER |= (1 << TIM_DIER_TIE_Pos);
+    timerBase->DIER |= TIM_DIER_UIE;
 
     return timSuccess;
 }

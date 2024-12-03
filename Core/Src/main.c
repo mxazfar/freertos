@@ -15,7 +15,7 @@ tim_general_config_t timer2Config = {
     .countStyle = timGeneralCountUp,
     .prescaleAmount = 1,
     .clockDivision = timGenCkInt,
-    .preloadValue = 0xFFFF
+    .preloadValue = 0x2000
 };
 
 void displaySegmentTask(void *params) {
@@ -37,6 +37,7 @@ void init() {
     initDisplay();
 
     NVIC_SetPriority(TIM2_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY);
+    NVIC_EnableIRQ(TIM2_IRQn);
     rcc_enable_peripheral_clk(rccClkTim2);
 
     configureTimer(timGeneralTimer2, &timer2Config);
