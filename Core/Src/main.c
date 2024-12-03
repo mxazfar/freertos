@@ -2,6 +2,7 @@
 #include "stm32f446xx.h"
 #include "gpio.h"
 #include "rcc.h"
+#include "adc.h"
 #include "q7seg.h"
 
 #include "FreeRTOS.h"
@@ -18,6 +19,19 @@ tim_general_config_t timer2Config = {
     .preloadValue = 0xFFFF
 };
 
+void initInterrupts() {
+    NVIC_SetPriority(TIM2_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY);
+    NVIC_EnableIRQ(TIM2_IRQn);
+}
+
+void init() {
+    initDisplay();
+    initInterrupts();
+
+    configureTimer(timGeneralTimer2, &timer2Config);
+    startTimer(timGeneralTimer2);
+}
+
 void displaySegmentTask(void *params) {
     while(1) {
         for(uint8_t i = 0; i < 4; i++) {
@@ -32,21 +46,6 @@ void displaySegmentTask(void *params) {
     }
 }
 
-void TIM2_IRQHandler(void) {
-    TIM2->SR &= ~TIM_SR_UIF;
-    displayNum++;
-}
-
-void init() {
-    initDisplay();
-
-    NVIC_SetPriority(TIM2_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY);
-    NVIC_EnableIRQ(TIM2_IRQn);
-
-    configureTimer(timGeneralTimer2, &timer2Config);
-    startTimer(timGeneralTimer2);
-}
-
 void main(void) {
     init();
 
@@ -55,4 +54,9 @@ void main(void) {
     vTaskStartScheduler();
 
     while(1) {}
+}
+
+void TIM2_IRQHandler(void) {
+    TIM2->SR &= ~TIM_SR_UIF;
+    displayNum++;
 }
