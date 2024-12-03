@@ -1,10 +1,13 @@
 #include "tim_general.h"
+#include "rcc.h"
 #include "stm32f446xx.h"
 
 TIM_TypeDef* timGeneral2to5PtrArray[4] = {TIM2, TIM3, TIM4, TIM5};
 
 tim_ret_t configureTimer(tim_general_timer_t timer, tim_general_config_t *timerConfiguration) {
     TIM_TypeDef* timerBase = timGeneral2to5PtrArray[timer];
+
+    rcc_enable_peripheral_clk(rccClkTim2 + timer);
 
     timerBase->CR1 |= (timerConfiguration->clockDivision << TIM_CR1_CKD_Pos) | 
                       (timerConfiguration->countStyle << TIM_CR1_DIR_Pos) |

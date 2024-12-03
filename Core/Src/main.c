@@ -42,7 +42,6 @@ void init() {
 
     NVIC_SetPriority(TIM2_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY);
     NVIC_EnableIRQ(TIM2_IRQn);
-    rcc_enable_peripheral_clk(rccClkTim2);
 
     configureTimer(timGeneralTimer2, &timer2Config);
     startTimer(timGeneralTimer2);
