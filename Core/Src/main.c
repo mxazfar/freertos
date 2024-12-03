@@ -13,16 +13,20 @@ uint16_t displayPow10[5] = {1, 10, 100, 1000, 10000};
 
 tim_general_config_t timer2Config = {
     .countStyle = timGeneralCountUp,
-    .prescaleAmount = 1,
+    .prescaleAmount = (1 << 3),
     .clockDivision = timGenCkInt,
-    .preloadValue = 0x2000
+    .preloadValue = 0xFFFF
 };
 
 void displaySegmentTask(void *params) {
     while(1) {
         for(uint8_t i = 0; i < 4; i++) {
             uint8_t numToDisplay = (displayNum % displayPow10[i + 1]) / displayPow10[i];
-            writeDisplaySingle(q7segSegs[3-i], numToDisplay, 1);
+
+            if(displayNum > displayPow10[i]) {
+                writeDisplaySingle(q7segSegs[3-i], numToDisplay, 1);
+            }
+
             vTaskDelay(pdMS_TO_TICKS(5));
         }
     }
