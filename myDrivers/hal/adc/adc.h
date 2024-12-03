@@ -86,4 +86,7 @@ typedef struct {
     uint8_t numChannels; // number of channels
 } adc_config_t;
 
+adc_ret_t configureAdc(adc_unit_t unit, adc_config_t *adcConfig)
+adc_ret_t triggerSample(adc_unit_t unit);
+
 #endif /* ADC_H */
