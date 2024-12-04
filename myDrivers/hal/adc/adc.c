@@ -47,3 +47,9 @@ adc_ret_t triggerSample(adc_unit_t unit) {
 
     return adcSuccess;
 }
+
+uint16_t readAdcResult(adc_unit_t unit) {
+    ADC_TypeDef *adcUnit = ADC_GET_UNIT_ADDR(unit);
+
+    return adcUnit->DR;
+}

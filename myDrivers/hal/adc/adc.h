@@ -89,4 +89,6 @@ typedef struct {
 adc_ret_t configureAdc(adc_unit_t unit, adc_config_t *adcConfig)
 adc_ret_t triggerSample(adc_unit_t unit);
 
+uint16_t readAdcResult(adc_unit_t unit)
+
 #endif /* ADC_H */
