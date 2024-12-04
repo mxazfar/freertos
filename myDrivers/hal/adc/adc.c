@@ -26,7 +26,7 @@ adc_ret_t configureAdc(adc_unit_t unit, adc_config_t *adcConfig) {
 
         // write pin sequence
         if(i < 6) {
-            adcUnit->SQR3 |= adcConfig->channels[i] << i * 5;
+            adcUnit->SQR3 |= adcConfig->channels[i] + 1 << i * 5;
         } else if (i < 13) {
             adcUnit->SQR2 |= adcConfig->channels[i] << (i * 5 - 30);
         } else {
