@@ -62,6 +62,11 @@ typedef enum {
     gpioAF15
 } gpio_alt_func_t;
 
+typedef struct {
+    gpio_port_t port;
+    gpio_pin_t pin;
+} io_pin_t;
+
 gpio_ret_t gpio_pin_set_dir(gpio_port_t port, gpio_pin_t pin, gpio_dir_t direction);
 gpio_ret_t gpio_pin_read(gpio_port_t port, gpio_pin_t pin, gpio_level_t *reading);
 gpio_ret_t gpio_pin_write(gpio_port_t port, gpio_pin_t pin, gpio_level_t level);
