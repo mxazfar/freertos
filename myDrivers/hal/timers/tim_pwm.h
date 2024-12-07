@@ -43,7 +43,7 @@ typedef struct {
     tim_pwm_cms_t pwmCenterAlignmentMode;
     tim_general_prescaler_t prescaleAmount;
     tim_general_clk_div_t clockDivision;
-    tim_general_load_t preloadValue;
+    tim_general_load_t preloadValue; // used as baseline PWM frequency
 } tim_pwm_config_t;
 
 #endif /* TIM_PWM_H */
