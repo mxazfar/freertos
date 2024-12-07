@@ -4,6 +4,12 @@
 
 #define ADC_GET_UNIT_ADDR(adcUnit) ((uintptr_t)ADC1 + (ADC_UNIT_REGISTER_OFFSET*adcUnit))
 
+/**
+ * @brief Configure ADC unit
+ * @param unit ADC unit to be configured
+ * @param adcConfig Pointer to configuration
+ * @return Fail/success
+ */
 adc_ret_t configureAdc(adc_unit_t unit, adc_config_t *adcConfig) {
     ADC_TypeDef *adcUnit = ADC_GET_UNIT_ADDR(unit);
 
@@ -40,6 +46,11 @@ adc_ret_t configureAdc(adc_unit_t unit, adc_config_t *adcConfig) {
     return adcSuccess;
 }
 
+/**
+ * @brief Triggers sample of ADC. The unit must be configured before calling this function.
+ * @param unit ADC unit to sample
+ * @return Fail/success
+ */
 adc_ret_t triggerSample(adc_unit_t unit) {
     ADC_TypeDef *adcUnit = ADC_GET_UNIT_ADDR(unit);
 
@@ -48,8 +59,38 @@ adc_ret_t triggerSample(adc_unit_t unit) {
     return adcSuccess;
 }
 
+/**
+ * @brief Reads raw ADC result of unit
+ * @param unit ADC unit to read
+ * @return Contents of the ADC unit's data register
+ */
 uint16_t readAdcResult(adc_unit_t unit) {
     ADC_TypeDef *adcUnit = ADC_GET_UNIT_ADDR(unit);
 
     return adcUnit->DR;
+}
+
+/**
+ * @brief Filters DC result by applying a hysteresis filter
+ * @param rawAdcReading Raw ADC reading to be filtered
+ * @return Filtered ADC reading
+ */
+uint16_t filterAdcResultHysteresis(uint16_t rawAdcReading) {
+    static uint16_t prevFilteredReading = 0;
+    static uint8_t firstCall = 1;
+
+    if (firstCall) {
+        firstCall = 0;
+        prevFilteredReading = rawAdcReading;
+    }
+
+    if ((rawAdcReading > prevFilteredReading + ADC_HYSTERESIS_AMOUNT) && (rawAdcReading < prevFilteredReading + ADC_JUMP_AMOUNT)) {
+        prevFilteredReading = rawAdcReading; 
+    } else if ((rawAdcReading < prevFilteredReading - ADC_HYSTERESIS_AMOUNT) && (rawAdcReading > prevFilteredReading - ADC_JUMP_AMOUNT)) {
+        prevFilteredReading = rawAdcReading; 
+    } else if ((rawAdcReading >= prevFilteredReading + ADC_JUMP_AMOUNT) || (rawAdcReading <= prevFilteredReading - ADC_JUMP_AMOUNT)) {
+        prevFilteredReading = (prevFilteredReading + rawAdcReading) / 2; // damping to approach large jump
+    }
+
+    return prevFilteredReading;
 }

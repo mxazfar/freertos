@@ -66,7 +66,7 @@ void sampleAnalogSignalTask(void *params) {
         triggerSample(adc1);
 
         xSemaphoreTake(adcSampleResult, portMAX_DELAY);
-        displayNum = adcResult;
+        displayNum = filterAdcResultHysteresis(adcResult);
     }
 }
 

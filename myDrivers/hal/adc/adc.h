@@ -4,6 +4,8 @@
 #include <stdint.h>
 
 #define ADC_UNIT_REGISTER_OFFSET 0x100U
+#define ADC_HYSTERESIS_AMOUNT 18
+#define ADC_JUMP_AMOUNT 28
 
 typedef enum {
     adcTim1Ch1,
@@ -90,5 +92,6 @@ adc_ret_t configureAdc(adc_unit_t unit, adc_config_t *adcConfig);
 adc_ret_t triggerSample(adc_unit_t unit);
 
 uint16_t readAdcResult(adc_unit_t unit);
+uint16_t filterAdcResultHysteresis(uint16_t rawAdcReading);
 
 #endif /* ADC_H */
